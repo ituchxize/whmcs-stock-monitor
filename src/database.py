@@ -1,19 +1,18 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base, Session
+from sqlmodel import SQLModel, create_engine, Session
+from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 from typing import Generator
 
 from .config import settings
 
-Base = declarative_base()
-
 engine = create_engine(
     settings.database_url,
     connect_args={"check_same_thread": False} if settings.database_url.startswith("sqlite") else {},
-    pool_pre_ping=True
+    pool_pre_ping=True,
+    echo=False
 )
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=Session)
 
 
 def get_db() -> Generator[Session, None, None]:
@@ -37,5 +36,5 @@ def get_db_context() -> Generator[Session, None, None]:
 
 def init_db() -> None:
     """Initialize database tables."""
-    from .models import MonitorConfig, StockRecord
-    Base.metadata.create_all(bind=engine)
+    from .models import Website, MonitorConfig, StockRecord, MonitorHistory
+    SQLModel.metadata.create_all(bind=engine)

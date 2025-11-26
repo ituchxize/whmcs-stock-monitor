@@ -1,0 +1,54 @@
+# Database Migrations with Alembic
+
+This directory contains database migration scripts for the WHMCS Stock Monitor.
+
+## Migration Management
+
+### Apply All Pending Migrations
+
+```bash
+alembic upgrade head
+```
+
+### Create a New Migration
+
+After modifying models in `src/models.py`:
+
+```bash
+alembic revision --autogenerate -m "Description of your changes"
+```
+
+### Rollback Last Migration
+
+```bash
+alembic downgrade -1
+```
+
+### View Migration History
+
+```bash
+alembic history
+```
+
+### View Current Version
+
+```bash
+alembic current
+```
+
+## Migration Files
+
+Migration files are stored in the `versions/` directory. Each file contains:
+- `upgrade()`: Function to apply the migration
+- `downgrade()`: Function to rollback the migration
+
+## Configuration
+
+The migration environment is configured in:
+- `alembic.ini`: Main configuration file
+- `env.py`: Python environment setup (loads settings from `src.config`)
+
+## Database URL
+
+The database URL is automatically loaded from `src.config.settings.database_url`.
+You can override this via the `DATABASE_URL` environment variable.

@@ -7,6 +7,11 @@ from .exceptions import (
     WhmcsTimeoutError,
     WhmcsValidationError
 )
+from .models import MonitorConfig, StockRecord
+from .monitoring_engine import MonitoringEngine, StockChangeDetector
+from .scheduler import MonitorScheduler
+from .events import EventBus, StockEvent, EventType, event_bus
+from .config import settings
 
 __all__ = [
     'WhmcsClient',
@@ -15,5 +20,15 @@ __all__ = [
     'WhmcsAPIError',
     'WhmcsConnectionError',
     'WhmcsTimeoutError',
-    'WhmcsValidationError'
+    'WhmcsValidationError',
+    'MonitorConfig',
+    'StockRecord',
+    'MonitoringEngine',
+    'StockChangeDetector',
+    'MonitorScheduler',
+    'EventBus',
+    'StockEvent',
+    'EventType',
+    'event_bus',
+    'settings'
 ]
